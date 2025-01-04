@@ -53,13 +53,13 @@ class Battleship:
         return "Miss!"
 
     def print_field(self) -> None:
-        for column in range(10):
-            for row in range(10):
-                if (column, row) in self.field:
-                    if self.field[(column, row)].is_drowned:
+        for row in range(10):
+            for column in range(10):
+                if (row, column) in self.field:
+                    if self.field[(row, column)].is_drowned:
                         print("   x   ", end="")
-                    elif not (self.field[(column, row)].
-                              get_deck(column, row).
+                    elif not (self.field[(row, column)].
+                              get_deck(row, column).
                               is_alive):
                         print("   *   ", end="")
                     else:
@@ -81,9 +81,12 @@ class Battleship:
             check_coord_3 = (coord[0] + 1, coord[1] + 1)
             if check_coord_3 in self.field:
                 return False
+            check_coord_4 = (coord[0] - 1, coord[1] + 1)
+            if check_coord_4 in self.field:
+                return False
         return True
 
-    def _validate_field(self) -> str:
+    def validate_field(self) -> str:
         self.total_ships = len(self.ships)
         self.single_deck, self.double_deck = 0, 0
         self.three_deck, self.four_deck = 0, 0
@@ -108,19 +111,3 @@ class Battleship:
                 and self.four_deck == 1):
             return "Validation passed"
         return "Validation not passed"
-
-#
-# battle_ship = Battleship(
-#     ships=[
-#         ((0, 0), (0, 3)),
-#         ((0, 5), (0, 6)),
-#         ((0, 8), (0, 9)),
-#         ((2, 0), (4, 0)),
-#         ((2, 4), (2, 6)),
-#         ((2, 8), (2, 9)),
-#         ((9, 9), (9, 9)),
-#         ((7, 7), (7, 7)),
-#         ((7, 9), (7, 9)),
-#         ((9, 7), (9, 7)),
-#     ]
-# )
